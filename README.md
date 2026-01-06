@@ -147,11 +147,6 @@ https://kapKurgan.github.io/effective-mobile/20753388702/allure-report/index.htm
 - Python 3.10
 - GitHub account (для CI/CD и GitHub Pages)
 
-Установка зависимостей:
-```bash
-pip install -r requirements.txt
-```
-
 --- 
 
 ## Интеграция с GitHub Actions

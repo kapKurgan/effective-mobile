@@ -55,7 +55,10 @@ https://www.saucedemo.com/
 ### для тестов:
 
 - перед вводом логина/пароля проводится проверка placeholder с allure-шагом. При ошибке делает скриншот и прикрепляет его к Allure-отчёту.
-- тестовые данные хранятся в файле [login_date_positive.json](./data_tests/login_date_positive.json) в формате [user, password, title, story, description, severity, tag].
+- тестовые данные хранятся в файле [login_date_positive.json](./data_tests/login_date_positive.json) в формате: 
+```bash
+[user, password, title, story, description, severity, tag]
+```
 - перед нажатием на кнопку (Login) текст не ней с allure-шагом. При ошибке делает скриншот и прикрепляет его к Allure-отчёту.
 - делается проверка на ошибки при невалидном вводе логина/пароля с allure-шагом. При ошибке делает скриншот и прикрепляет его к Allure-отчёту.
 - при валидном вводе делается переход на страницу с товаром

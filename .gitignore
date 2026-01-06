@@ -12,6 +12,7 @@ __pycache__
 allure-results
 assets
 pytest_report.html
+pytest.log
 
 # Mac OS
 .DS_Store

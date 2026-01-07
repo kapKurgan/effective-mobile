@@ -39,6 +39,7 @@ https://www.saucedemo.com/
 
 - [Реализовано](#реализовано)
 - [Начало работы](#начало-работы)
+- [Docker](#docker)
 - [CI/CD](#cicd)
 - [URL отчетов GitHub Pages](#url-отчетов-github-pages)
 - [Интеграция с GitHub Actions](#интеграция-с-github-actions)
@@ -117,6 +118,28 @@ pytest --headed --slowmo 1000 -v --alluredir=reports/allure-results --html=repor
 ```bash
 allure serve reports/allure-results
 ```
+
+---
+
+## Docker
+
+В этом проекте реализован запуск тестов в контейнере. 
+
+Конфигурацию можно найти в [Dockerfile](./Dockerfile).
+
+### Команда: запустить сборку образа **aqa-py** на основе инструкций из **Dockerfile**
+
+```bash
+docker build -t aqa-py .
+```
+
+### Команда: создать новый контейнер из образа **aqa-py** и сразу запустить его
+
+```bash
+docker run --rm -p 8080:8080 -p 5252:5252 -v ${PWD}/reports:/app/reports aqa-py
+```
+
+Команда запускает изолированный контейнер с тестами, пробрасывает порты для доступа к HTML и Allure-отчётам, монтирует папку reports, а после остановки удаляет контейнер, оставляя только отчёты на хосте.
 
 ---
 

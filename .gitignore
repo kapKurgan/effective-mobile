@@ -10,6 +10,7 @@ __pycache__
 
 # report
 allure-results
+allure-report
 assets
 pytest_report.html
 pytest.log

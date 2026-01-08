@@ -160,7 +160,7 @@ https://kapKurgan.github.io/effective-mobile/<run_id>/pytest-report.html
 ```
 
 Например:
-https://kapKurgan.github.io/effective-mobile/20789637473/pytest_report.html
+https://kapKurgan.github.io/effective-mobile/20805269469/pytest_report.html
 
 
 ### ALLURE 
@@ -170,7 +170,7 @@ https://kapKurgan.github.io/effective-mobile/<run_id>/allure-report/index.html
 ```
 
 Например:
-https://kapKurgan.github.io/effective-mobile/20789637473/allure-report/index.html
+https://kapKurgan.github.io/effective-mobile/20805269469/allure-report/index.html
 
 ---
 

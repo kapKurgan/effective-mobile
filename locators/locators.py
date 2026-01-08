@@ -1,7 +1,6 @@
 from playwright.sync_api import Page
 from pytest_playwright.pytest_playwright import page
-from utils.checks import check_attr, check_text, check_url
-
+from utils.checks import check_attr, check_text, check_url, check_locator
 
 # page_login
 BASE_URL = 'https://www.saucedemo.com/'
@@ -33,14 +32,18 @@ class Locators:
         """
             Выполняет вход с заданными учетными данными.
         """
+
+        check_locator(self.input_user_name, PLACEHOLDER_INPUT_USERNAME, self.page)
         check_attr(self.input_user_name, PLACEHOLDER_INPUT_USERNAME, self.page, "placeholder")
         self.input_user_name.fill(user_name)
         print(f"    ⌨️ В поле {PLACEHOLDER_INPUT_USERNAME} введено значение: {user_name}")
 
+        check_locator(self.input_password, PLACEHOLDER_INPUT_PASSWORD, self.page)
         check_attr(self.input_password, PLACEHOLDER_INPUT_PASSWORD, self.page, "placeholder")
         self.input_password.fill(password)
         print(f"    ⌨️ В поле {PLACEHOLDER_INPUT_PASSWORD} введено значение: {password}")
 
+        check_locator(self.button_login, VALUE_BUTTON_LOGIN, self.page)
         check_attr(self.button_login, VALUE_BUTTON_LOGIN, self.page, "value")
 
 
@@ -49,4 +52,5 @@ class Locators:
             Выполняет проверку перехода на страницу Products
         """
         check_url(self.page, BASE_URL + PATH_PRODUCTS)
+        check_locator(self.logo_product, LOGO_PAGE_PRODUCTS, self.page)
         check_text(self.logo_product, LOGO_PAGE_PRODUCTS, self.page)

@@ -2,7 +2,7 @@ import allure
 import pytest
 from playwright.sync_api import Page
 from locators.locators import BASE_URL, Locators, LOGO_PAGE_HOME
-from utils.checks import open_page, check_url, check_text
+from utils.checks import open_page, check_url, check_text, check_locator
 
 
 @allure.title("Подготовка тестового окружение (фикстура)")
@@ -16,5 +16,6 @@ def open_home_page(page: Page) -> Locators:
     open_page(page, BASE_URL)
     check_url(page, BASE_URL)
     login_page = Locators(page)
+    check_locator(login_page.logo_url, LOGO_PAGE_HOME, page)
     check_text(login_page.logo_url, LOGO_PAGE_HOME, page)
     return login_page

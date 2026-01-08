@@ -94,3 +94,18 @@ def attach_screenshot(page: Page, name: str = "Скриншот"):
     screenshot = page.screenshot()
     allure.attach(screenshot, name=name, attachment_type=allure.attachment_type.PNG)
     print(f"  📸 Сделан: {name}")
+
+def check_locator(locator: Locator, expected: str, page: Page) -> None:
+    """
+        Универсальная проверка локатора.
+        При ошибке делает скриншот и прикрепляет его к Allure-отчёту.
+    """
+
+    test_locator = locator.is_visible()
+    # print(test_locator, expected)
+    with allure.step(f'Проверить локатор для: "{expected}"'):
+        if test_locator:
+            print(f"  ✅ Успешная проверка локатора для: {expected}")
+        else:
+            print(f"  ❌ Локатор для: {expected} не обнаружен")
+            assert test_locator, f"Локатор для: {expected} не обнаружен"

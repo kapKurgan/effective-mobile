@@ -19,7 +19,6 @@ class TestsLogin:
     """
         Параметризованные тесты логина с динамическими аннотациями Allure.
     """
-
     @pytest.mark.parametrize("input_value", login_data)
     def test_login(self, open_home_page, input_value: list) -> None:
         """

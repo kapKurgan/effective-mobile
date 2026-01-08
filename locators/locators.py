@@ -32,7 +32,6 @@ class Locators:
         """
             Выполняет вход с заданными учетными данными.
         """
-
         check_locator(self.input_user_name, PLACEHOLDER_INPUT_USERNAME, self.page)
         check_attr(self.input_user_name, PLACEHOLDER_INPUT_USERNAME, self.page, "placeholder")
         self.input_user_name.fill(user_name)

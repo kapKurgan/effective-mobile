@@ -12,6 +12,7 @@ def open_home_page(page: Page) -> Locators:
         Открывает BASE_URL и жёстко проверяет совпадение адреса.
         При ЛЮБОЙ проблеме с навигацией тест ПАДАЕТ
     """
+    print(f"\n⚙️ Подготовительные действия для теста")
     open_page(page, BASE_URL)
     check_url(page, BASE_URL)
     login_page = Locators(page)

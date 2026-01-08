@@ -27,6 +27,7 @@ class TestsLogin:
             Аннотации формируются из параметров.
         """
         user, password, title, story, description, severity, tag = input_value
+        print(f"▶️ {story} - {title} - {description}")
 
         # динамические аннотации Allure
         allure.dynamic.story(story)
@@ -44,6 +45,7 @@ class TestsLogin:
 
         if login_page.error_text.is_visible():
             actual_msg = login_page.error_text.locator('h3').text_content()
+            print(f"  ⚠️ Ошибка: {actual_msg}")
             with allure.step(f"Появилось сообщение об ошибке: {actual_msg}"):
                 attach_screenshot(login_page.page, "Скриншот с ошибкой")
                 # для негативных сценариев считаем ошибку ОК
@@ -55,3 +57,4 @@ class TestsLogin:
             with allure.step("Ошибки нет, проверяем переход на Products"):
                 login_page.page_products()
                 attach_screenshot(login_page.page, "Скриншот Products")
+        print(f"🏁 Тест окончен")

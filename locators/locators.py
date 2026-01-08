@@ -34,11 +34,15 @@ class Locators:
             Выполняет вход с заданными учетными данными.
         """
         check_attr(self.input_user_name, PLACEHOLDER_INPUT_USERNAME, self.page, "placeholder")
+        self.input_user_name.fill(user_name)
+        print(f"    ⌨️ В поле {PLACEHOLDER_INPUT_USERNAME} введено значение: {user_name}")
+
         check_attr(self.input_password, PLACEHOLDER_INPUT_PASSWORD, self.page, "placeholder")
+        self.input_password.fill(password)
+        print(f"    ⌨️ В поле {PLACEHOLDER_INPUT_PASSWORD} введено значение: {password}")
+
         check_attr(self.button_login, VALUE_BUTTON_LOGIN, self.page, "value")
 
-        self.input_user_name.fill(user_name)
-        self.input_password.fill(password)
 
     def page_products(self):
         """

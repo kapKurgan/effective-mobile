@@ -35,6 +35,12 @@ https://www.saucedemo.com/
 
 ---
 
+## Дополнительно к заданию реализованы тесты с 'Бургер меню' на странице 'Products'
+
+- Получение списков 'Названия' и 'Локаторы' кнопок в 'Бургер меню' 
+
+---
+
 ## Оглавление
 
 - [Реализовано](#реализовано)
@@ -162,8 +168,7 @@ https://kapKurgan.github.io/effective-mobile/<run_id>/pytest-report.html
 ```
 
 Например:
-https://kapKurgan.github.io/effective-mobile/20806140524/pytest_report.html
-
+https://kapKurgan.github.io/effective-mobile/20879955726/pytest_report.html
 
 ### ALLURE 
 
@@ -172,7 +177,7 @@ https://kapKurgan.github.io/effective-mobile/<run_id>/allure-report/index.html
 ```
 
 Например:
-https://kapKurgan.github.io/effective-mobile/20806140524/allure-report/index.html
+https://kapKurgan.github.io/effective-mobile/20879955726/allure-report/index.html
 
 ---
 

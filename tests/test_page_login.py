@@ -4,7 +4,7 @@
 
 import allure
 import pytest
-from locators.locators import VALUE_BUTTON_LOGIN
+from locators.locators import VALUE_BUTTON_LOGIN, LOGO_PAGE_PRODUCTS
 from utils.read_data import read_test_data_json
 from utils.checks import attach_screenshot
 
@@ -19,6 +19,8 @@ class TestsLogin:
     """
         Параметризованные тесты логина с динамическими аннотациями Allure.
     """
+
+    @pytest.mark.order(1)
     @pytest.mark.parametrize("input_value", login_data)
     def test_login(self, open_home_page, input_value: list) -> None:
         """
@@ -53,7 +55,7 @@ class TestsLogin:
                 else:
                     pytest.fail(f"Не ожидали ошибку, но получили: {actual_msg}")
         else:
-            with allure.step("Ошибки нет, проверяем переход на Products"):
+            with allure.step(f"Ошибки нет, проверяем переход на '{LOGO_PAGE_PRODUCTS}'"):
                 login_page.page_products()
-                attach_screenshot(login_page.page, "Скриншот Products")
+                attach_screenshot(login_page.page, f"Скриншот '{LOGO_PAGE_PRODUCTS}'")
         print(f"🏁 Тест окончен")

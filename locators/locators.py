@@ -19,13 +19,19 @@ LOGO_PAGE_PRODUCTS = 'Products'
 
 class Locators:
     def __init__(self, page: Page):
+        # page_login
         self.page = page
         self.input_user_name = page.locator('#user-name')
         self.input_password = page.locator('#password')
         self.button_login = page.locator('#login-button')
         self.logo_url = page.locator('#root > div > div.login_logo')
-        self.logo_product = page.locator('#header_container > div.header_secondary_container > span')
         self.error_text = page.locator('#login_button_container > div > form > div.error-message-container.error')
+
+        # page_products
+        self.logo_product = page.locator('#header_container > div.header_secondary_container > span')
+        self.button_product_bm_open = page.locator('#react-burger-menu-btn')
+        self.button_product_bm_close = page.locator('#react-burger-cross-btn')
+        self.buttons_product_bm_list = page.locator('.bm-item-list >> a')
 
 
     def page_login(self, user_name: str, password: str):

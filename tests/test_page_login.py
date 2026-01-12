@@ -4,7 +4,7 @@
 
 import allure
 import pytest
-from locators.locators import VALUE_BUTTON_LOGIN, LOGO_PAGE_PRODUCTS
+from pages.site_pages import VALUE_BUTTON_LOGIN, LOGO_PAGE_PRODUCTS
 from utils.read_data import read_test_data_json
 from utils.checks import attach_screenshot
 

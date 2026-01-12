@@ -104,9 +104,14 @@ def test_burger_menu_about(open_home_page) -> None:
     buttons_list = _open_burger_menu(login_page)
     _, buttons_product_bm_list_locator = _collect_button_data(buttons_list)
 
+    attach_screenshot(login_page.page, "Скриншот перед 'About'")
+
+    print("==================================== 0", login_page.page)
     login_page.page.locator(f"#{buttons_product_bm_list_locator[1]}").click()
+    print("==================================== 1", login_page.page)
 
     with allure.step("Сделать скриншот информация о сайте (пункт 'About' в 'Бургер меню')"):
+        print("==================================== 2", login_page.page)
         attach_screenshot(login_page.page, "Скриншот информация о сайте (пункт 'About' в 'Бургер меню')")
 
     print(f"🏁 Тест окончен")

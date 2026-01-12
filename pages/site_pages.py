@@ -1,6 +1,6 @@
 from playwright.sync_api import Page
 from pytest_playwright.pytest_playwright import page
-from utils.checks import check_attr, check_text, check_url, check_locator
+from utils.checks import expect_visible, expect_text, expect_attr, expect_url
 
 # page_login
 BASE_URL = 'https://www.saucedemo.com/'
@@ -8,9 +8,6 @@ LOGO_PAGE_HOME = 'Swag Labs'
 PLACEHOLDER_INPUT_USERNAME = 'Username'
 PLACEHOLDER_INPUT_PASSWORD = 'Password'
 VALUE_BUTTON_LOGIN = 'Login'
- # 'Epic sadface: Username and password do not match any user in this service' ('#login_button_container > div > form > div.error-message-container.error')
- # 'Epic sadface: Username is required'                                        ('#login_button_container > div > form > div.error-message-container.error')
- # 'Epic sadface: Sorry, this user has been locked out.'                       ('#login_button_container > div > form > div.error-message-container.error')
 
 # page_products
 PATH_PRODUCTS = 'inventory.html'
@@ -38,24 +35,24 @@ class SitePages:
         """
             Выполняет вход с заданными учетными данными.
         """
-        check_locator(self.input_user_name, PLACEHOLDER_INPUT_USERNAME, self.page)
-        check_attr(self.input_user_name, PLACEHOLDER_INPUT_USERNAME, self.page, "placeholder")
+        expect_visible(self.input_user_name, PLACEHOLDER_INPUT_USERNAME)
+        expect_attr(self.input_user_name, "placeholder", PLACEHOLDER_INPUT_USERNAME)
         self.input_user_name.fill(user_name)
-        print(f"    ⌨️ В поле {PLACEHOLDER_INPUT_USERNAME} введено значение: {user_name}")
+        print(f"  ⌨️ В поле {PLACEHOLDER_INPUT_USERNAME} введено значение: {user_name}")
 
-        check_locator(self.input_password, PLACEHOLDER_INPUT_PASSWORD, self.page)
-        check_attr(self.input_password, PLACEHOLDER_INPUT_PASSWORD, self.page, "placeholder")
+        expect_visible(self.input_password, PLACEHOLDER_INPUT_PASSWORD)
+        expect_attr(self.input_password, "placeholder", PLACEHOLDER_INPUT_PASSWORD)
         self.input_password.fill(password)
-        print(f"    ⌨️ В поле {PLACEHOLDER_INPUT_PASSWORD} введено значение: {password}")
+        print(f"  ⌨️ В поле {PLACEHOLDER_INPUT_PASSWORD} введено значение: {password}")
 
-        check_locator(self.button_login, VALUE_BUTTON_LOGIN, self.page)
-        check_attr(self.button_login, VALUE_BUTTON_LOGIN, self.page, "value")
+        expect_visible(self.button_login, VALUE_BUTTON_LOGIN)
+        expect_attr(self.button_login, "value", VALUE_BUTTON_LOGIN)
 
 
     def page_products(self):
         """
             Выполняет проверку перехода на страницу Products
         """
-        check_url(self.page, BASE_URL + PATH_PRODUCTS)
-        check_locator(self.logo_product, LOGO_PAGE_PRODUCTS, self.page)
-        check_text(self.logo_product, LOGO_PAGE_PRODUCTS, self.page)
+        expect_url(self.page, BASE_URL + PATH_PRODUCTS)
+        expect_visible(self.logo_product, LOGO_PAGE_PRODUCTS)
+        expect_text(self.logo_product, LOGO_PAGE_PRODUCTS)

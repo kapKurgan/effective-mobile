@@ -1,71 +1,46 @@
 import allure
-from playwright.sync_api import Locator, Page, Error as PWError
+from playwright.sync_api import Locator, Page, expect, Error as PWError
 # import logging
 # logging.info(f"✅ Открыта страница: {url}")
 
-
-def check_attr(locator: Locator, expected: str, page: Page, attr_name: str = "placeholder") -> None:
+def expect_visible(locator: Locator, name: str) -> None:
     """
-        Универсальная проверка атрибута у поля.
-        При ошибке делает скриншот и прикрепляет его к Allure-отчёту.
+        Нативный expect: элемент виден.
     """
-    with allure.step(f'Проверить {attr_name} поля "{expected}"'):
-        actual = locator.get_attribute(attr_name)
-        if actual != expected:
-            print(f"  ❌ Ожидаемый атрибут {attr_name} поля {expected} не соответствует фактическому: {expected}")
-            allure.attach(
-                page.screenshot(full_page=True),
-                name=f"{attr_name} не соответствует {expected.lower()}",
-                attachment_type=allure.attachment_type.PNG,
-            )
-            print(f"  📸 Сделан скриншот с ошибкой")
-            raise AssertionError(
-                f"Ожидаемый {attr_name}: {expected}, фактический: {actual}"
-            )
-        else:
-            print(f"  ✅ Успешная проверка атрибута {attr_name} у поля: {expected}")
+    with allure.step(f'Проверить видимость элемента «{name}»'):
+        expect(locator).to_be_visible()
 
 
-def check_text(locator: Locator, expected: str, page: Page) -> None:
+def expect_text(locator: Locator, expected: str) -> None:
     """
-        Универсальная проверка текста у поля.
-        При ошибке делает скриншот и прикрепляет его к Allure-отчёту.
+        Нативный expect: точное совпадение текста.
     """
-    with allure.step(f'Проверить название: "{expected}"'):
-        actual = locator.text_content()
-        if actual != expected:
-            print(f"  ❌ Ожидаемое название: {actual} не соответствует фактическому: {expected}")
-            allure.attach(
-                page.screenshot(full_page=True),
-                name=f"Название: {actual} не соответствует: {expected.lower()}",
-                attachment_type=allure.attachment_type.PNG,
-            )
-            print(f"  📸 Сделан скриншот с ошибкой")
-            raise AssertionError(
-                f"Ожидаемое название: {expected}, фактическое: {actual}"
-            )
-        else:
-            print(f"  ✅ Успешная проверка названия: {expected}")
+    with allure.step(f'Проверить текст элемента: «{expected}»'):
+        expect(locator).to_have_text(expected)
 
 
-def check_url(page: Page, expected: str) -> None:
+def expect_attr(locator: Locator, attr: str, expected: str) -> None:
     """
-        Универсальная проверка текущего URL.
-        При ошибке делает скриншот и прикрепляет его к Allure-отчёту.
+        Нативный expect: значение атрибута.
     """
-    with allure.step(f'Проверить URL: "{expected}"'):
-        actual = page.url
-        if actual != expected:
-            print(f"  ❌ Ожидаемый URL: {expected} не соответствует фактическому: {actual}")
-            allure.attach(
-                page.screenshot(full_page=True),
-                name=f"url_error_{expected.replace('/', '_').replace(':', '')}",
-                attachment_type=allure.attachment_type.PNG,
-            )
-            print(f"  📸 Сделан скриншот с ошибкой")
-            raise AssertionError(f"Ожидаемый URL: {expected}, фактический: {actual}")
-        else:
-            print(f"  ✅ Успешная проверка URL: {expected}")
+    with allure.step(f'Проверить атрибут {attr} = «{expected}»'):
+        expect(locator).to_have_attribute(attr, expected)
+
+
+def expect_url(page: Page, expected: str) -> None:
+    """
+        Нативный expect: URL страницы.
+    """
+    with allure.step(f'Проверить URL: «{expected}»'):
+        expect(page).to_have_url(expected)
+
+
+def expect_count(locator: Locator, count: int) -> None:
+    """
+        Нативный expect: количество элементов в списке.
+    """
+    with allure.step(f'Проверить количество элементов: {count}'):
+        expect(locator).to_have_count(count)
 
 
 def open_page(page: Page, url: str, *, wait_until: str = "load", timeout: int = 10_000) -> None:
@@ -96,17 +71,3 @@ def attach_screenshot(page: Page, name: str = "Скриншот"):
     screenshot = page.screenshot()
     allure.attach(screenshot, name=name, attachment_type=allure.attachment_type.PNG)
     print(f"  📸 Сделан: {name}")
-
-
-def check_locator(locator: Locator, expected: str, page: Page) -> None:
-    """
-        Универсальная проверка локатора.
-        При ошибке делает скриншот и прикрепляет его к Allure-отчёту.
-    """
-    test_locator = locator.is_visible()
-    with allure.step(f'Проверить локатор для: "{expected}"'):
-        if test_locator:
-            print(f"  ✅ Успешная проверка локатора для: {expected}")
-        else:
-            print(f"  ❌ Локатор для: {expected} не обнаружен")
-            assert test_locator, f"Локатор для: {expected} не обнаружен"

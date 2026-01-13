@@ -11,6 +11,7 @@ on:
           - '-m all'
           - '-m burger_menu'
           - '-m positive'
+          - '-m negative'
           - '-m smoke'
           - '-m regression'
         required: true

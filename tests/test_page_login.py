@@ -4,52 +4,34 @@
 
 import allure
 import pytest
+from playwright.sync_api import expect
+
 from pages.site_pages import VALUE_BUTTON_LOGIN, LOGO_PAGE_PRODUCTS
 from utils.read_data import read_test_data_json
-from utils.checks import attach_screenshot
-
+from utils.checks import attach_screenshot, expect_visible
 
 # [user, password, title, story, description, severity, tag]
-login_data = read_test_data_json("data_tests/login_date_positive.json")
-
+login_date_positive = read_test_data_json("data_tests/login_date_positive.json")
+login_date_negative = read_test_data_json("data_tests/login_date_negative.json")
 
 def run_login_test(open_home_page, input_value: list) -> None:
     """
         Единый тест, покрывающий все 5 сценариев.
         Аннотации формируются из параметров.
     """
-    user, password, title, story, description, severity, tag = input_value
-    print(f"▶️ {story} - {title} - {description}")
+    user, password, title, description = input_value
+    print(f"▶️ {title} - {description}")
 
     # динамические аннотации Allure
-    allure.dynamic.story(story)
     allure.dynamic.title(title)
     allure.dynamic.description(description)
-    allure.dynamic.severity(getattr(allure.severity_level, severity))
-    allure.dynamic.tag(tag)
+    # allure.dynamic.severity(getattr(allure.severity_level, severity))
 
     login_page = open_home_page
     with allure.step(f"Ввести учётные данные: {user} / {password}"):
         login_page.page_login(user, password)
-
     with allure.step(f"Нажать кнопку: {VALUE_BUTTON_LOGIN}"):
         login_page.button_login.click()
-
-    if login_page.error_text.is_visible():
-        actual_msg = login_page.error_text.locator('h3').text_content()
-        print(f"  ⚠️ Ошибка: {actual_msg}")
-        with allure.step(f"Появилось сообщение об ошибке: {actual_msg}"):
-            attach_screenshot(login_page.page, "Скриншот с ошибкой")
-            # для негативных сценариев считаем ошибку ОК
-            if tag == "negative":
-                assert actual_msg, "Ожидали текст ошибки"
-            else:
-                pytest.fail(f"Не ожидали ошибку, но получили: {actual_msg}")
-    else:
-        with allure.step(f"Ошибки нет, проверяем переход на '{LOGO_PAGE_PRODUCTS}'"):
-            login_page.page_products()
-            attach_screenshot(login_page.page, f"Скриншот '{LOGO_PAGE_PRODUCTS}'")
-    print(f"🏁 Тест окончен")
 
 
 @allure.epic("Техническое задание: AQA Python")
@@ -64,14 +46,36 @@ class TestsLogin:
     @pytest.mark.positive
     @pytest.mark.login
     @pytest.mark.all
-    @pytest.mark.parametrize("input_value", [login_data[0]])  # standard_user
-    def test_login_smoke(self, open_home_page, input_value: list) -> None:
+    @allure.story("Позитивный сценарий")
+    @allure.tag("positive")
+    @allure.severity(allure.severity_level.CRITICAL)
+    @pytest.mark.parametrize("input_value", login_date_positive)  # standard_user
+    def test_login_positive(self, open_home_page, input_value: list) -> None:
         run_login_test(open_home_page, input_value)
+
+        with allure.step(f'Проверить видимость элемента с текстом об ошибке'):
+            expect(open_home_page.error_text).not_to_be_visible()
+        with allure.step(f"Ошибки нет, проверяем переход на '{LOGO_PAGE_PRODUCTS}'"):
+            open_home_page.page_products()
+            attach_screenshot(open_home_page.page, f"Скриншот '{LOGO_PAGE_PRODUCTS}'")
+        print(f"🏁 Тест окончен")
+
 
     @pytest.mark.order(2)
     @pytest.mark.regression
+    @pytest.mark.negative
     @pytest.mark.login
     @pytest.mark.all
-    @pytest.mark.parametrize("input_value", login_data[1:])
-    def test_login_full(self, open_home_page, input_value: list) -> None:
+    @allure.story("Негативный сценарий")
+    @allure.tag("negative")
+    @allure.severity(allure.severity_level.MINOR)
+    @pytest.mark.parametrize("input_value", login_date_negative)
+    def test_login_negative(self, open_home_page, input_value: list) -> None:
         run_login_test(open_home_page, input_value)
+
+        expect_visible(open_home_page.error_text, open_home_page.error_text)
+        actual_msg = open_home_page.error_text.locator('h3').text_content()
+        print(f"  ⚠️ Ошибка: {actual_msg}")
+        with allure.step(f"Появилось сообщение об ошибке: {actual_msg}"):
+            attach_screenshot(open_home_page.page, "Скриншот с ошибкой")
+        print(f"🏁 Тест окончен")

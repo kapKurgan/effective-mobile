@@ -61,6 +61,7 @@ def _close_burger_menu(login_page):
 @allure.story("Позитивный сценарий")
 @allure.title("Получение списков 'Названия' и 'Локаторы' кнопок в 'Бургер меню'")
 @allure.tag("positive")
+@allure.severity(allure.severity_level.MINOR)
 @allure.description("Получение списков 'Названия' и 'Локаторы' кнопок в 'Бургер меню'")
 def test_burger_menu(open_home_page) -> None:
 
@@ -93,6 +94,7 @@ def test_burger_menu(open_home_page) -> None:
 @allure.story("Позитивный сценарий")
 @allure.title("Получение информации о сайте (пункт 'About' в 'Бургер меню')")
 @allure.tag("positive")
+@allure.severity(allure.severity_level.NORMAL)
 @allure.description("Получение информации о сайте (пункт 'About' в 'Бургер меню')")
 def test_burger_menu_about(open_home_page) -> None:
 

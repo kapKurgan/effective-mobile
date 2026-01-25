@@ -5,4 +5,5 @@ pytest-html==4.1.1
 pytest-order==1.3.0
 allure-pytest==2.15.3
 allure-python-commons
+pytest-xdist==3.8.0
 
